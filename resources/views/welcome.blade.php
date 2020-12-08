@@ -34,7 +34,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Keja Search</a>
+      <a class="navbar-brand js-scroll-trigger" href="/">Keja Search</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -101,9 +101,7 @@
         <div class="col-lg-5 my-auto">
           <div class="header-content mx-auto">
             <h1 class="mb-5">Place your houses for rent on our platform and reach more tenants. Begin your journey as a digital landlord now</h1>
-            <button type="button" class="btn btn-outline-info btn-xl js-scroll-trigger" data-toggle="modal" data-target="#exampleModal">
-            Start Renting Out 
-          </button>
+            <a href="/new_landlord" class="btn btn-outline-info btn-xl js-scroll-trigger"> Start Renting Out</a>
           </div>
         </div>
       </div>

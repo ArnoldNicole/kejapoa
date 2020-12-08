@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class GuestController extends Controller
 {
@@ -10,6 +13,44 @@ class GuestController extends Controller
 		//return $request;
 		//dd($request);
     	return view('contact.contact');
+    }
+
+    public function newLandlord(){
+    	if (Auth::check()) {
+    		return redirect('/profile');
+    	}
+    	return view('guest.newLandlord');
+    }
+
+    public function create_Landlord(Request $request){
+        $data = $this->validate($request, [
+            'name'=>['required', 'string', 'max:255'],
+            'username'=>['required', 'string', 'max:255','unique:users'],
+            'email'=>['required', 'string', 'email', 'max:255', 'unique:users'],               
+            'password'=>['required', 'string', 'min:8', 'confirmed'],
+            'krapin'=>['required', 'string', 'max:255','unique:users'],            
+        ]);
+
+       $user =  User::create([
+                    'name' => $data['name'],
+                    'username' => $data['username'],
+                    'email' => $data['email'],
+                    'is_landlord'=>1,
+                    'krapin'=>$data['krapin'],
+                    'profile_image'=>'/img/default.png',
+                    'password' => Hash::make($data['password']),
+                    
+        ]);
+
+       $credentials = $request->only('email', 'password');
+       Auth::attempt($credentials);
+       $request->session()->regenerate();
+       return redirect()->intended('/profile');   
+
+
+
+
+
     }
 
 }

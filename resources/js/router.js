@@ -9,8 +9,6 @@ import Agents from './components/pages/agents'
 import ImageUploader  from './components/pages/ImageUpload'
 import HouseImageUploader from  './components/pages/HouseImageUpload'
 
-
-
 const routes = [
     //projects routes....      
     {
@@ -42,8 +40,7 @@ const routes = [
   {
     path:'/house/upload/:id',
     component: HouseImageUploader,
-  }
-
+  }, 
 ]
 
 

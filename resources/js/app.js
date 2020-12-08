@@ -14,6 +14,7 @@ Vue.use(ViewUi, { locale });
 Vue.use(Vue2Editor);
 Vue.mixin(common)
 Vue.component('main-app', require('./components/main-app.vue').default)
+Vue.component('registration-form', require('./components/pages/registerLandlord').default)
 // Vue.component('quill-component', require('./components/pages/QuillComponent.vue').default);
 const app = new Vue({
     el: '#app', 

@@ -91,9 +91,10 @@ This registration form is only for users who are looking for houses,
         <div class="col-md-4">
             <div class="alert alert-info font-weight-bold">
             <h3>To register as a landlord, 
-                      <button type="button" class="btn btn-outline-info btn-sm js-scroll-trigger" data-toggle="modal" data-target="#exampleModal">
+                      {{-- <button type="button" class="btn btn-outline-info btn-sm js-scroll-trigger" data-toggle="modal" data-target="#exampleModal">
                       click here 
-                    </button>
+                    </button> --}}
+                    <a href="/new_landlord" class="btn btn-sm btn-outline-primary">Landlord Registration</a>
              </h3>
             </div>
         </div>

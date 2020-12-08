@@ -21,7 +21,9 @@ class User extends Authenticatable
         'email',
         'password', 
         'username',
-        'is_landlord',       
+        'is_landlord',
+        'profile_image',
+        'krapin'       
     ];
      public function setUserStatusAttribute(){
 
