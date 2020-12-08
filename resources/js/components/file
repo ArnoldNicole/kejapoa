@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <b-button v-b-toggle.sidebar-1 variant="success">Menu</b-button>
+    <b-sidebar id="sidebar-1" title="Keja Search Menu" shadow>
+      <div class="px-3 py-2">        
+        <div>
+          <b-nav vertical class="w-25">
+            <b-nav-item class="font-weight-bold"><router-link variant="success" to="/profile" >Home</router-link></b-nav-item>
+            <b-nav-item class="font-weight-bold" ><router-link to="/addHouses">Houses</router-link></b-nav-item>
+            <b-nav-item class="font-weight-bold">
+              <b-dropdown  text="Agents" size="sm" variant="primary">
+                <b-dropdown-item>
+                  <router-link variant="success" to="/agents/create">Add Agent</router-link>
+                </b-dropdown-item>
+
+                <b-dropdown-item>
+                  <router-link variant="success" to="/agents/view">View my Agents</router-link>
+                </b-dropdown-item>
+
+              </b-dropdown>
+            </b-nav-item>
+
+            <b-nav-item class="font-weight-bold">
+              <b-dropdown  text="Chat"size="sm" variant="primary">
+                <b-dropdown-item>
+                  <router-link variant="success" to="/chats/create">New Chat</router-link>
+                </b-dropdown-item>
+
+                <b-dropdown-item>
+                  <router-link variant="success" to="/chats/trash">Trash</router-link>
+                </b-dropdown-item>
+
+              </b-dropdown>
+            </b-nav-item>
+            <b-nav-item class="font-weight-bold" >Another Link</b-nav-item>
+            <b-nav-item disabled  variant="success">Disabled</b-nav-item>
+          </b-nav>
+        </div>
+      </div>
+    </b-sidebar>
+    <hr class="border border-danger">
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col><router-view></router-view></b-col> 
+      </b-row>
+    </b-container>
+  </div>
+</template>

@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\House;
+
+
+class LandlordController extends Controller
+{
+    public function __construct()
+    {
+    	return $this->middleware('landlord');
+    }
+    public function getHouses(){
+    	return auth()->user()->houses;
+    }
+    public function create(Request $request){
+		$this->validate($request, [
+			'house_name'=>['required','string','unique:houses'],
+			'geo_location'=>['required','string'],
+			'status'=>['required','string'],
+			'rooms'=>['required','string'],
+			'condition'=>['required','string'],
+			'description'=>['required','string','min:30'],
+			'rent_amount'=>['required','string']
+		]);
+
+    	$house =  auth()->user()->houses()->create([
+    		'house_name'=>$request->house_name,
+    		'geo_location'=>$request->geo_location,
+    		'status'=>$request->status,
+    		'rooms'=>$request->rooms,
+    		'condition'=>$request->condition,
+    		'description'=>$request->description,
+    		'rent_amount'=>$request->rent_amount
+    	]);
+    	return $house;
+    }
+
+        public function editHouse(Request $request){
+        	$this->validate($request, [
+        		'house_name'=>['required'],
+        		//'geo_location'=>$request->geo_location,
+        		//'status'=>$request->status,
+        		'rooms'=>['required'],
+        		'condition'=>['required'],
+        		'description'=>['required'],
+        		'rent_amount'=>['required']
+        	]);
+    		return House::where('id', $request->id)->update([
+    		'house_name'=>$request->house_name,
+    		//'geo_location'=>$request->geo_location,
+    		//'status'=>$request->status,
+    		'rooms'=>$request->rooms,
+    		'condition'=>$request->condition,
+    		'description'=>$request->description,
+    		'rent_amount'=>$request->rent_amount
+    		]);
+    }
+}
