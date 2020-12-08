@@ -40,7 +40,7 @@ Route::get('/landlord/getHouseImageData/{house}','HouseController@fetchImages')-
 Route::get('/json/getHouseImageData/{house}','HouseController@json')->middleware('auth');
 Route::post('/app/upload','HouseController@createImages')->middleware('auth');
 Route::post('/landlord/image/upload','HouseController@store')->middleware('auth');
-Route::get('/new_landlord','GUestController@newLandlord');
+Route::get('/new_landlord','GuestController@newLandlord');
 Route::post('/landlord/new','GuestController@create_Landlord')->middleware('guest');;
 
 
