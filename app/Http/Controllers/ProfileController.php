@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Cloudinary;
 
 class ProfileController extends Controller
 {
@@ -79,10 +80,11 @@ class ProfileController extends Controller
         ]);
         //dd($data);
         $imageName = time().'.'.$request->file->extension();
-        $request->file->move(public_path('profiles'), $imageName);
-        auth()->user()->profile_image = '/profiles/'.$imageName;
+        // $request->file->move(public_path('profiles'), $imageName);
+        $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+        auth()->user()->profile_image = $uploadedFileUrl; //'/profiles/'.$imageName;
         auth()->user()->save();       
-        return $imageName;
+        return $uploadedFileUrl;
       
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\House;
 use App\Models\Image;
+use Cloudinary;
 
 class HouseController extends Controller
 {
@@ -40,8 +41,9 @@ class HouseController extends Controller
             'file' => 'required|mimes:jpeg,jpg,png',
         ]);
         $picName = time() . '.' . $request->file->extension();
-        $request->file->move(public_path('uploads'), $picName);
-        return $picName;
+        $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+        //$request->file->move(public_path('uploads'), $picName);
+        return $uploadedFileUrl;
     }
 
     public function store(Request $request){

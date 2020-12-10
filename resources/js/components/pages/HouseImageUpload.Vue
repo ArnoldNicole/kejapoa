@@ -71,7 +71,7 @@ export default {
   },
   methods:{
     handleSuccess(res, file) {
-         res = `/uploads/${res}`;
+         res = `${res}`;
          this.data.iconImage = res;
        },
 
