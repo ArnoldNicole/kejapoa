@@ -41,7 +41,8 @@ Route::get('/json/getHouseImageData/{house}','HouseController@json')->middleware
 Route::post('/app/upload','HouseController@createImages')->middleware('auth');
 Route::post('/landlord/image/upload','HouseController@store')->middleware('auth');
 Route::get('/new_landlord','GuestController@newLandlord');
-Route::post('/landlord/new','GuestController@create_Landlord')->middleware('guest');;
+Route::post('/landlord/new','GuestController@create_Landlord')->middleware('guest');
+Route::post('/search/house','GuestController@find');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\House;
 use Illuminate\Support\Facades\Hash;
 
 class GuestController extends Controller
@@ -45,9 +46,16 @@ class GuestController extends Controller
        $credentials = $request->only('email', 'password');
        Auth::attempt($credentials);
        $request->session()->regenerate();
-       return redirect()->intended('/profile');   
+       return redirect()->intended('/profile');
+    }
 
-
+    public function find(Request $request){      
+    $query= $this->validate($request, [
+        'query'=>['required']
+    ]);
+    //dd($query['query']);  
+    $houses = House::search($query['query'])->get();
+    return $houses;
 
 
 

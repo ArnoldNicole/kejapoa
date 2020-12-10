@@ -21,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
   <!-- Plugin CSS -->
-  <link rel="stylesheet" href="{{asset('device-mockups/device-mockups.min.css')}}">
+  {{-- <link rel="stylesheet" href="{{asset('device-mockups/device-mockups.min.css')}}"> --}}
 
   <!-- Custom styles for this template -->
   <link href="{{asset('css/new-age.min.css')}}" rel="stylesheet">
@@ -82,8 +82,8 @@
             <a class="nav-link js-scroll-trigger" href="#download">Discover</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#features">Houses</a>
-          </li>          
+            <a class="nav-link js-scroll-trigger" href="#features">Search</a>
+          </li>                     
         </ul>
       </div>
     </div>
@@ -95,7 +95,9 @@
         <div class="col-lg-7 my-auto">
           <div class="header-content mx-auto">
             <h1 class="mb-5">Keja search is a one stop location for all your house search business. Find your desired locations, the house you need and begin renting.</h1>
-            <a class="btn btn-outline btn-xl js-scroll-trigger" href="/register">Find your place for free</a>
+            <a class="btn btn-outline btn-xl js-scroll-trigger" href="/register">Register for free</a><br>
+            
+
           </div>
         </div>
         <div class="col-lg-5 my-auto">
@@ -140,9 +142,10 @@
         <p class="text-muted">Unlimited locations!</p>     
       </div>
       <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-12" id="app">
           <h4 class="h4 text-capitalize text-info">Search Houses</h4>
-          <form class="form bg-primary">
+          <house-search></house-search>
+{{--           <form class="form bg-primary">
             <div class="form-group row">
              <div class="col-md-4">
               <label for="location">Location</label>
@@ -161,7 +164,7 @@
 
             </div>
             <hr>
-          </form>
+          </form> --}}
         </div>
       </div>
       <div class="row">
@@ -179,44 +182,14 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>        
 
-        <div class="col-lg-4 my-auto">
-          <div class="device-container">
-            <div class="device-mockup iphone6_plus portrait white">
-              <div class="device">
-                <div class="screen">
-                  <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                  <img src="img/img_2.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="button">
-                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>         
 
-        <div class="col-lg-4 my-auto">
-          <div class="device-container">
-            <div class="device-mockup iphone6_plus portrait white">
-              <div class="device">
-                <div class="screen">
-                  <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                  <img src="img/img_3.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="button">
-                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> 
       </div>
     </div>
   </section>
 
-  
+  <br>
   <section class="contact bg-primary" id="contact">
     <div class="container">
       <h2>We
@@ -260,6 +233,7 @@
   </footer>
 @include('includes.modal')
   <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{{asset('/js/app.js')}}"></script>
   <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
