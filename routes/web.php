@@ -43,6 +43,8 @@ Route::post('/landlord/image/upload','HouseController@store')->middleware('auth'
 Route::get('/new_landlord','GuestController@newLandlord');
 Route::post('/landlord/new','GuestController@create_Landlord')->middleware('guest');
 Route::post('/search/house','GuestController@find');
+Route::get('/house/profile/{house}','GuestController@viewHouse');
+Route::get('/house/viewImage/{image}','GuestController@explore');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

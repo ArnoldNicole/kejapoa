@@ -138,13 +138,40 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-heading text-center">
-        <h2>Unlimited rooms</h2>
-        <p class="text-muted">Unlimited locations!</p>     
+        <h2>Find Unlimited rooms</h2>
+        <p class="text-muted">In Unlimited locations!</p>     
       </div>
       <div class="row justify-content-center">
-        <div class="col-md-12" id="app">
+        <div class="col-md-12">
           <h4 class="h4 text-capitalize text-info">Search Houses</h4>
-          <house-search></house-search>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group row">
+                <label class="text-md-right col-form-label col-md-4">House Search</label>
+                <div class="col-md-8 input-group">
+                  <input type="text" id="FindHouse" class="form-control" placeholder="Type your search">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-md-12" id="HouseResults">
+              
+            </div>
+
+          </div>
+
+          <div class="row justify-content-center" id="loader" style="display: none;">
+            <div class="col-3">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+          </div>         
 {{--           <form class="form bg-primary">
             <div class="form-group row">
              <div class="col-md-4">
@@ -217,7 +244,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy;Keja serach s Reserved.</p>
+      <p>&copy;KejaPoa  Reserved.</p>
       <ul class="list-inline">
         <li class="list-inline-item">
           <a href="#">Privacy</a>
@@ -231,9 +258,8 @@
       </ul>
     </div>
   </footer>
-@include('includes.modal')
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="{{asset('/js/app.js')}}"></script>
+  {{-- <script type="text/javascript" src="{{asset('/js/app.js')}}"></script> --}}
   <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
@@ -242,6 +268,8 @@
 
   <!-- Custom scripts for this template -->
   <script src="{{ asset('js/new-age.min.js')}}"></script>
+  {{-- <script src="{{ asset('js/debounce.js')}}"></script> --}}
+  <script type="text/javascript" src="{{ asset('/js/search.js')}}"></script> 
 
 </body>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\House;
+use App\Models\Image;
 use Illuminate\Support\Facades\Hash;
 
 class GuestController extends Controller
@@ -57,8 +58,16 @@ class GuestController extends Controller
     $houses = House::search($query['query'])->get();
     return $houses;
 
+    }
 
+    public function viewHouse (House $house){
+        $house=$house;
+        //dd($house);
+        return view('guest.houseTour', compact('house'));
+    }
 
+    public function explore(Image $image){
+         return view('guest.show', compact('image'));
     }
 
 }
