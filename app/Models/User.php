@@ -32,7 +32,7 @@ class User extends Authenticatable
 
              static::created(function ($user) {
                  $user->contact()->create([
-                     'title' => $user->username,
+                     'town' => 'Nairobi',
                  ]);
 
                  Mail::to($user->email)->send(new NewUserWelcomeMail());
