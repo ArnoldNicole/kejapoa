@@ -58,4 +58,15 @@ class LandlordController extends Controller
     		'rent_amount'=>$request->rent_amount
     		]);
     }
+    public function update(Request $request){
+            $data = $this->validate($request, [                
+                'phone_number'=>['required','numeric','digits:10','starts_with:07,01,08'],
+                'postal_box'=>['required','string','numeric'],
+                'postal_code'=>['required','string','numeric'],
+                'town'=>['required','string','min:3'],
+            ]);
+             auth()->user()->contact()->update($data);
+            return $data;
+
+    }
 }

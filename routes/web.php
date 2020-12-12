@@ -45,6 +45,7 @@ Route::post('/landlord/new','GuestController@create_Landlord')->middleware('gues
 Route::post('/search/house','GuestController@find');
 Route::get('/house/profile/{house}','GuestController@viewHouse');
 Route::get('/house/viewImage/{image}','GuestController@explore');
+Route::post('/user/editContactData','LandlordController@update')->middleware('auth');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

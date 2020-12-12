@@ -25,9 +25,19 @@ class User extends Authenticatable
         'profile_image',
         'krapin'       
     ];
-     public function setUserStatusAttribute(){
 
-     }
+     protected static function boot()
+         {
+             parent::boot();
+
+             static::created(function ($user) {
+                 $user->contact()->create([
+                     'title' => $user->username,
+                 ]);
+
+                 Mail::to($user->email)->send(new NewUserWelcomeMail());
+             });
+         }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -57,5 +67,8 @@ class User extends Authenticatable
     public function agents()
     {
          return $this->hasMany('App\Models\Agent');
+    }
+    public function contact(){
+        return $this->hasOne('App\Models\Contact');
     }
 }

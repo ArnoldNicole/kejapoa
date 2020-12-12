@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Cloudinary;
+use App\Http\Resources\User as UserResource;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -100,6 +102,7 @@ class ProfileController extends Controller
     }
     public function location(Request $request)
     {
+
         $lat= -1.2713984;
          //$request->lat;
         $long = 36.85744640000001;
@@ -117,6 +120,6 @@ class ProfileController extends Controller
     }
 
     public function user(){
-        return auth()->user();
+        return new UserResource(auth()->user());
     }
 }
