@@ -9,14 +9,9 @@
 			<div class="card-body">
 				<div class="container">
 				    <div class="row">
-				        <div class="col-3 pt-4 text-center">
-				            <img src="{{ $house->user->profile_image }}" class="rounded-circle w-auto">
-
-				            <div class="btn-group pt-1">
-				            	<a href="" class="btn btn-success btn-sm">Contact Landlord</a>
-
-				            	 <a href="" class="btn btn-outline-info btn-sm">Show Interest</a>
-				            </div>
+				        <div class="col-3 p-3">
+				            <img src="{{ $house->user->profile_image }}" class="rounded-circle w-100 img-fluid">
+				            
 				        </div>
 				        <div class="col-9 pt-5">
 				            <div class="d-flex justify-content-between align-items-baseline">
@@ -27,7 +22,11 @@
 				                </div>	
 				            </div>
 
-				           
+				           <div class="btn-group pt-1">
+				           	<a href="" class="btn btn-success btn-sm">Contact Landlord</a>
+
+				           	 <a href="" class="btn btn-outline-info btn-sm">Show Interest</a>
+				           </div>
 				                
 				            
 
