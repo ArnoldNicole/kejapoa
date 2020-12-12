@@ -35,7 +35,7 @@ class User extends Authenticatable
                      'town' => 'Nairobi',
                  ]);
 
-                 Mail::to($user->email)->send(new NewUserWelcomeMail());
+                 //Mail::to($user->email)->send(new NewUserWelcomeMail());
              });
          }
 
