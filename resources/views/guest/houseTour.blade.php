@@ -9,7 +9,7 @@
 			<div class="card-body">
 				<div class="container">
 				    <div class="row">
-				        <div class="col-3 p-5">
+				        <div class="col-3 p-4">
 				            <img src="{{ $house->user->profile_image }}" class="rounded-circle w-100">
 				        </div>
 				        <div class="col-9 pt-5">
@@ -49,7 +49,7 @@
 				    <div class="row pt-5">
 				        @foreach($house->images as $post)
 				            <div class="col-4 pb-4">
-				                <a href="/house/viewImage/{{ $post->id }}" target="_blank">
+				                <a href="/house/viewImage/{{ $post->id }}">
 				                    <img src="{{$post->image}}" class="w-100">
 				                </a>
 				            </div>

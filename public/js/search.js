@@ -21,7 +21,7 @@ $(document).ready(function () {
                       if(Object.keys(data).length==0){
                        alert('No houses with that criteria')
                       }else{
-                          alert('Found'+Object.keys(data).length+' House(s)')                     
+                          alert('Found '+Object.keys(data).length+' House(s)')                     
                          var htmlText = data.map(function(o){
                            return `
                                <div class="div-conatiner">
