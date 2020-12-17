@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\Message;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+// Broadcast::channel('messenger.{id}', function ($user, $id) {
+//     return $user->id===Message::find($id)->to_user; 
+// });
+Broadcast::channel('chat', function ($user) {
+  return Auth::check();
 });
+Broadcast::channel('post.{id}', function ($user, $id) {
+    return true;
+});
+

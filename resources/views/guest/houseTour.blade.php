@@ -23,7 +23,7 @@
 				            </div>
 
 				           <div class="btn-group pt-1">
-				           	<a href="" class="btn btn-success btn-sm">Contact Landlord</a>
+				           	<a href="/chat/{{$house->user->id}}" class="btn btn-success btn-sm">Contact Landlord</a>
 
 				           	 <a href="" class="btn btn-outline-info btn-sm">Show Interest</a>
 				           </div>

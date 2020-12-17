@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class GuestController extends Controller
 {
+    public function index(){
+        $featuredHouses = [];
+        return view('welcome', compact('featuredHouses'));
+    }
     public function contact_page(Request $request){
 		//return $request;
 		//dd($request);

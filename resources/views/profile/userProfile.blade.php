@@ -53,6 +53,8 @@
 @endsection
 @section('content')
 <div class="col-md-12 my-auto" id="app">
-	<main-app></main-app>
+	<main-app :auth_user_id="{{auth()->user()->id}}">
+		
+	</main-app>
 </div>
 @endsection

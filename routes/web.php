@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'GuestController@index');
 
 Auth::routes();
+Broadcast::routes();
 Route::get('/user','HomeController@show')->middleware('auth');
 
 //Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
 //Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
@@ -46,6 +44,9 @@ Route::post('/search/house','GuestController@find');
 Route::get('/house/profile/{house}','GuestController@viewHouse');
 Route::get('/house/viewImage/{image}','GuestController@explore');
 Route::post('/user/editContactData','LandlordController@update')->middleware('auth');
+Route::get('/chat/{user}','ChatController@index')->middleware('auth');
+Route::get('/user/fetchmessages/{user}','ChatController@show')->middleware('auth');
+Route::post('/user/sendMessage','ChatController@store')->middleware('auth');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

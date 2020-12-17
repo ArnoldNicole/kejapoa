@@ -109,32 +109,6 @@
       </div>
     </div>
   </header>
-
-  <section class="download bg-primary text-center" id="download">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 mx-auto">
-          
-         <a href="#" class="float">
-         <i class="fa fa-envelope my-float"></i>
-         </a>
-         <div class="label-container">
-         <div class="label-text">Talk to Us</div>
-         <i class="fa fa-play label-arrow"></i>
-         </div>
-
-
-          <h2 class="section-heading">Discover what all the buzz is about!</h2>
-          <p>Our app is available on any mobile device! Download now to get started!</p>
-          <div class="badges">
-            <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
-            {{-- <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a> --}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="features" id="features">
     <div class="container">
       <div class="section-heading text-center">
@@ -172,51 +146,54 @@
             </div>
             </div>
           </div>         
-{{--           <form class="form bg-primary">
-            <div class="form-group row">
-             <div class="col-md-4">
-              <label for="location">Location</label>
-               <input type="text" name="location" class="form-control">
-             </div>
 
-             <div class="col-md-4">
-               <label for="sizes">Sizes</label>
-               <input type="text" name="sizes" class="form-control">
-             </div>
-
-             <div class="col-md-4">
-               <label for="amount">Rent Amount</label>
-               <input type="text" name="amount" class="form-control">
-             </div>
-
-            </div>
-            <hr>
-          </form> --}}
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 my-auto">
-          <div class="device-container">
-            <div class="device-mockup iphone6_plus portrait white">
-              <div class="device">
-                <div class="screen">
-                  <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                  <img src="img/img_1.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="button">
-                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>        
-
-
+      	@foreach($featuredHouses as $featuredHouse)
+      		<div class="col-lg-4 my-auto">
+      		  <div class="device-container">
+      		    <div class="device-mockup iphone6_plus portrait white">
+      		      <div class="device">
+      		        <div class="screen">
+      		          <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+      		          <img src="img/img_1.jpg" class="img-fluid" alt="">
+      		        </div>
+      		        <div class="button">
+      		          <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+      		        </div>
+      		      </div>
+      		    </div>
+      		  </div>
+      		</div>
+      	@endforeach
       </div>
     </div>
   </section>
+  <section class="download bg-primary text-center" id="download">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          
+         <a href="#" class="float">
+         <i class="fa fa-envelope my-float"></i>
+         </a>
+         <div class="label-container">
+         <div class="label-text">Talk to Us</div>
+         <i class="fa fa-play label-arrow"></i>
+         </div>
 
-  <br>
+
+          <h2 class="section-heading">Discover what all the buzz is about!</h2>
+          <p>Our app is available on any mobile device! Download now to get started!</p>
+          <div class="badges">
+            <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
+            {{-- <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a> --}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="contact bg-primary" id="contact">
     <div class="container">
       <h2>We

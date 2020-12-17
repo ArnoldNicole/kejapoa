@@ -1,0 +1,34 @@
+Smadav 10.0 PRO 2015 + Serial (menin)
+
+SmadAV:
+
+SmadAV is antivirus for additional protection of your computer, USB stick total protection and thoroughly cleaning widespread virus.
+
+Key Features of PRO:
+
+*Automatic Update Online – SmadAV Pro can perform an automatic update with an internet connection whenever there is a new revision. SmadAV will install new revisions automatically without user command. Unlike the Free SmadAV, you still have to do the update manually by downloading the new revision in Smadav.net and open the program first SmadAV to update SmadAV on your computer.
+
+*Faster Scanning – Smad-Turbo can be activated to speed up the scanning process. SmadAV perform filtering by file type so SmadAV only scan the files were most likely infected with a virus. This feature is very effective in accelerating the process of scanning without compromising the ability of detection.
+
+*Exception List – SmadAV Exception List Pro has a feature that can be used to ignore (ignore) scanning the file, folder, or a specific registry that you consider safe and should be ignored. Once a file, folder, or registry added to the Exception List, then he will be ignored and will no longer be detected by SmadAV as viruses.
+
+*Maximize / Resize Display – If you feel the look SmadAV still less extensive, you can click the Maximize button or by changing (resize) SmadAV size manually. Or if you feel SmadAV look too big, you can click the Hide Panel which will automatically make SmadAV smaller by eliminating the right panel.
+
+*Changing the Color Theme – SmadAV Pro has the ability to change the color theme originally SmadAV green became the color of your choice. In the theme color settings you can find your own choice of colors for the theme SmadAV. Once you change the theme color, the color of all SmadAV display will automatically turn into the color of your choice.
+
+*Profit Use Permit – SMADAV Free version only allowed for non-profit use as computer / personal laptop at home or non-profit organization. While SmadAV Pro version is used for members SmadAV or institution / organization profit (companies, cafes, shops, rentals, computer services, studio, etc..)
+
+*Admin Password – If you are an Admin on a computer network (such as cafes, companies, etc..), Should limit the use SmadAV by adding a password to access the full features of SmadAV. Users can still perform virus scanning and cleaning but will not be able to access the quarantine feature, updates, tools, and settings on SmadAV except having an Admin password that you have set.
+
+
+Instructions:
+
+1.Install
+2.Use given key/name to register 
+3.Done.
+
+
+keys:
+
+Name: alm6iri
+Serial: 991299444313
