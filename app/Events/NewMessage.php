@@ -24,6 +24,7 @@ class NewMessage implements ShouldBroadcastNow
      */
     public function __construct(Message $message)
     {
+        //dd($message);
         $this->message = $message;
     }
 
@@ -34,14 +35,17 @@ class NewMessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-       return new PrivateChannel('chat');
+        //dd($this->message->to_user);
+        //dd($this->message->to_user);
+       return new PrivateChannel('chatroom.'.$this->message->to_user);
+      // return new Channel('chat');
     }
-   //  public function broadcastWith()
-   // {
-   //  return [
-   //      'content'=>$this->message->content,
-   //      'created_at'=>$this->message->created_at,
-   //      'from_user'=>$this->message->from_user,
-   //  ];
-   // }
+     public function broadcastWith()
+    {
+     return [
+         'content'=>$this->message->content,
+         'created_at'=>$this->message->created_at,
+         'from_user'=>$this->message->from_user,
+     ];
+    }
 }

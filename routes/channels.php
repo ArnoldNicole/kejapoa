@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +17,16 @@ use App\Models\Message;
 // Broadcast::channel('messenger.{id}', function ($user, $id) {
 //     return $user->id===Message::find($id)->to_user; 
 // });
-Broadcast::channel('chat', function ($user) {
-  return Auth::check();
+Broadcast::channel('chatroom.{toUser}', function ($user, $toUser) {
+    //return true; //$user->id === $toUser;
+    if (Auth::check()) {
+    	return [
+    		'id'=>$user->id,
+    		'username'=>$user->username
+    ];
+    }
 });
-Broadcast::channel('post.{id}', function ($user, $id) {
-    return true;
-});
+
+
+
 

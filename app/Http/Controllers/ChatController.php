@@ -48,20 +48,22 @@ class ChatController extends Controller
            'user_id'=>['required'],
            ]);
              //dd($data);
-               $receiver=User::findorfail($data['user_id']);
-               $chat=new Message;
+               if (User::find($data['user_id'])) {
                
-               $chat->to_user=$receiver->id;
-               $chat->from_user=auth()->user()->id;
-               //$chat->status='Unread';
-               $chat->content=$data['message'];
-
-               $chat->save();
-
-             broadcast(new NewMessage($chat));//->toOthers();
+              $message =  auth()->user()->messages()->create([
+              	'from_user'=>auth()->user()->id,
+              	'to_user'=>$data['user_id'],
+              	'content'=>$data['message']
+              ]);
+              //dd($message->id);
+              broadcast(new NewMessage($message))->toOthers();
                
 
             return $chat->toJson();
+               }else{
+               	 abort(401,'The user you are trying to chat with doesn`t exist');
+               }
+               
 
            
     }
@@ -74,33 +76,36 @@ class ChatController extends Controller
      */
     public function show(User $user)
     {
+    	if ($user) {    		
+    		$messages = Message::where(function($query) use ($user) {
+    		            $query->where('from_user', Auth::user()->id)->where('to_user', $user->id);
+    		        })->orWhere(function ($query) use ($user) {
+    		            $query->where('from_user', $user->id)->where('to_user', Auth::user()->id);
+    		        })->orderBy('created_at', 'ASC')->limit(15)->get();
 
-        $messages = Message::where(function($query) use ($user) {
-                    $query->where('from_user', Auth::user()->id)->where('to_user', $user->id);
-                })->orWhere(function ($query) use ($user) {
-                    $query->where('from_user', $user->id)->where('to_user', Auth::user()->id);
-                })->orderBy('created_at', 'ASC')->limit(50)->get();
+    		      //  dd($messages);
+    		if ($user->id==auth()->user()->id) {
+    		   abort(401,'You cant chat alone');
+    		}
 
-              //  dd($messages);
-        if ($user->id==auth()->user()->id) {
-           $error=['message'=>'You can`t chat alone'];
-           return response()->json($error);
-        }
+    		
 
-       
-
-        foreach ($messages as $message ) {
-            $message=[
-                   'content'=>$message->content,
-                   'from'=>$message->from_user,
-                   'to'=>$message->to_user,
-                   'created_at'=>$message->created_at->diffForHumans(),
-            ];        
-        }
-        
+    		foreach ($messages as $message ) {
+    		    $message=[
+    		           'content'=>$message->content,
+    		           'from'=>$message->from_user,
+    		           'to'=>$message->to_user,
+    		           'created_at'=>$message->created_at->diffForHumans(),
+    		    ];        
+    		}
+    		
 
 
-        return response()->json($messages); //view('chats.chat', compact('messages','user'));
+    		return response()->json($messages); //view('chats.chat', compact('messages','user'));
+    	}
+    	else{
+    		abort(404,' The user you requested could not be found in our server.');
+    	}
     }
 
     /**

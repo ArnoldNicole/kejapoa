@@ -68,6 +68,10 @@ class User extends Authenticatable
     {
          return $this->hasMany('App\Models\Agent');
     }
+    public function messages()
+    {
+         return $this->hasMany('App\Models\Message');
+    }
     public function contact(){
         return $this->hasOne('App\Models\Contact');
     }

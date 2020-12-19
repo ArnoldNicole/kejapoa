@@ -162,10 +162,11 @@
 		props:['authUserId'],
 		data(){
 			return{
-			user:[],
+			user:[], //logged in user
+			receiver:[],//user chatting with
 			data:{
 				message:'',
-				user_id:''
+				user_id:'',				
 			},
 			contacts:[],
 			conversation:[],
@@ -187,17 +188,19 @@
 							this.e(res.data.errors.message[0])
 						}
 					}else{
-						this.swr('Please try again')
+						if (res.status === 401) {
+							this.e(res.data.message)
+						}else{
+							this.swr('Unknown error ocuured')
+						}
 					}
 				}
 			},
-			listen(){						
-			      Echo.private('chat')
-			      .listen('NewMessage', (message) =>{
-			      	console.log(error)
-			        this.conversation.push(message);
-			      })
-			      
+			listen(){
+				window.Echo.private("chatroom."+this.user.id)
+				    .listen('.message.new', (e) => {
+				        console.log(e);
+				    });			      
 			    }
 		},
 		async mounted(){
@@ -206,19 +209,27 @@
 				this.user = responseData.data.data
 			}
 			else{
-				this.e('Something went wrong while loading houses')
+				this.e('Something went wrong while loading messages')
+
 			}
 
 			this.listen();
 		},
 		async created(){
-			//get the messages from this conversation 
+			//get the messages from this conversation with the user in parameter 
 			this.data.user_id = this.$route.params.id
 			const res= await this.callApi('get', '/user/fetchmessages/'+this.$route.params.id)
 			if (res.status === 200) {			
 				this.conversation = res.data
 			}else{
-				this.swr('Error fetching messages');
+				if (res.status === 401) {
+					this.e(res.data.message)
+					this.conversation = []
+					
+				}
+				if (res.status === 404) {
+					this.e(res.data.message)
+				}
 			}
 			//const response = await this.callApi('get', '/user/contacts/'+this.$route.params.id)
 			//if (response.status === 200) {			
