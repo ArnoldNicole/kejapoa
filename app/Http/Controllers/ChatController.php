@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Message;
 use Auth;
 use App\Events\NewMessage;
+use App\Http\Resources\User as UserResource;
 
 
 
@@ -20,9 +21,11 @@ class ChatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('profile.userProfile');
+        $recipient = new UserResource($user); 
+        $sender = new UserResource(auth()->user());      
+        return view('profile.chat' , compact('recipient','sender'));
     }
 
     /**
@@ -42,7 +45,8 @@ class ChatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {     
+    {  
+    //dd($request->user_id)   ;
             $data=request()->validate([           
            'message'=>['required','string'],
            'user_id'=>['required'],
@@ -56,10 +60,10 @@ class ChatController extends Controller
               	'content'=>$data['message']
               ]);
               //dd($message->id);
-              broadcast(new NewMessage($message))->toOthers();
+             broadcast(new NewMessage($message))->toOthers();
                
 
-            return $chat->toJson();
+            return $message->toJson();
                }else{
                	 abort(401,'The user you are trying to chat with doesn`t exist');
                }
@@ -140,5 +144,9 @@ class ChatController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function findRecipient(User $user){
+         return new UserResource($user);
     }
 }

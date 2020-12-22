@@ -106,6 +106,25 @@
 	.content{
 	    margin-top:40px;    
 	}
+	.online {
+	      height: 15px;
+	      width: 15px;
+	      background-color: #008000;
+	      border-radius: 50%;
+	      display: inline-block;
+	      margin-bottom: -4px;
+	      border: 1px solid white;
+	    }
+
+	  .offline {
+	        height: 15px;
+	        width: 15px;
+	        background-color: red;
+	        border-radius: 50%;
+	        display: inline-block;
+	        margin-bottom: -4px;
+	        border: 1px solid white;
+	      }
 	                 
 </style>
 
@@ -120,7 +139,16 @@
 
 			<Col span="18">
 				<Card>
-					<p slot="title">Kejapoa Chat area <span class="float-right text-info font-weight-bold">sending to {{user.name}} {{user.id}}</span>
+					<p slot="title">
+					 <div v-if="recipient">
+					 	<span> {{recipient.name}} is: 					 		
+					 		<span v-if="recipient.status=='offline'"><span class="offline"></span> Offline</span>
+					 		<span v-else><span class="online"></span> Online</span>
+					 	</span>
+					 </div>	
+					 <div v-else>
+					 	Loading...
+					 </div>					
 					</p>
 					<div class="card-body height3">
 							        			<ul class="chat-list" v-for="message in conversation">
@@ -144,13 +172,15 @@
 				<Form>
 					<FormItem prop="message">
 					    <Input type="text" v-model='data.message'  placeholder="Enter your message">
-					        <Icon type="md-mail" slot="prepend"></Icon>
-					    </Input>
+					        <Icon type="md-mail" slot="prepend"></Icon>				    </Input>
+					   
+					   
 					</FormItem>
+
 					<FormItem>
 						<Button @click="sendMessage">Send</Button>
 					</FormItem>
-					{{authUserId}}
+					
 				</Form>
 				</Card>
 			</Col>
@@ -158,29 +188,27 @@
 	</div>
 </template>
 <script>
-	export default {
-		props:['authUserId'],
+	export default {			  
 		data(){
-			return{
-			user:[], //logged in user
-			receiver:[],//user chatting with
+			return{			
 			data:{
 				message:'',
-				user_id:'',				
+				user_id:this.recipient.id,				
 			},
 			contacts:[],
 			conversation:[],
 			}
-		},
+		},    
 		methods:{
 			async sendMessage(){
 				if (this.data.message.trim()=='') {
-					return this.e('Please write something')
+					return this.e('Please type your message')
 				}
+				
 				const res =  await this.callApi('post', '/user/sendMessage', this.data)
 				if (res.status==200) {					
 					this.s('Message sent')
-					//this.conversation.push(res.data);
+					this.conversation.push(res.data);
 					this.data.message=''			
 				}else{
 					if(res.status==422){
@@ -188,37 +216,35 @@
 							this.e(res.data.errors.message[0])
 						}
 					}else{
-						if (res.status === 401) {
 							this.e(res.data.message)
-						}else{
-							this.swr('Unknown error ocuured')
 						}
 					}
-				}
+				},
+				async listen(){
+
+					 Echo.private('chatroom')					    
+					     .listen('NewMessage', (message) => {
+					     if (message.from_user == this.recipient.id && message.to_user == this.sender.id) {
+					     	this.conversation.push(message)
+					     }
+					     });		    						
+
+								      
+				    }
 			},
-			listen(){
-				window.Echo.private("chatroom."+this.user.id)
-				    .listen('.message.new', (e) => {
-				        console.log(e);
-				    });			      
-			    }
-		},
+
+
+
+		props:['sender','recipient'],		
 		async mounted(){
-			const responseData= await this.callApi('get', '/user/profileData')
-			if (responseData.status === 200) {			
-				this.user = responseData.data.data
-			}
-			else{
-				this.e('Something went wrong while loading messages')
-
-			}
-
 			this.listen();
-		},
+			},
+
+
+
+
 		async created(){
-			//get the messages from this conversation with the user in parameter 
-			this.data.user_id = this.$route.params.id
-			const res= await this.callApi('get', '/user/fetchmessages/'+this.$route.params.id)
+			const res = await this.callApi('get', '/user/fetchmessages/'+this.recipient.id)
 			if (res.status === 200) {			
 				this.conversation = res.data
 			}else{
@@ -230,15 +256,8 @@
 				if (res.status === 404) {
 					this.e(res.data.message)
 				}
-			}
-			//const response = await this.callApi('get', '/user/contacts/'+this.$route.params.id)
-			//if (response.status === 200) {			
-			//	this.contacts = response.data
-			//}else{
-			//	this.swr('Error fetching your contacts');
-			//}
-			//get the users conversation
-			
+			}			
+		
 			
 		}
 	}

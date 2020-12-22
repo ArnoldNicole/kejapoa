@@ -37,7 +37,7 @@ class NewMessage implements ShouldBroadcastNow
     {
         //dd($this->message->to_user);
         //dd($this->message->to_user);
-       return new PrivateChannel('chatroom.'.$this->message->to_user);
+       return new PrivateChannel('chatroom');
       // return new Channel('chat');
     }
      public function broadcastWith()
@@ -46,6 +46,7 @@ class NewMessage implements ShouldBroadcastNow
          'content'=>$this->message->content,
          'created_at'=>$this->message->created_at,
          'from_user'=>$this->message->from_user,
+         'to_user'=>$this->message->to_user,
      ];
     }
 }

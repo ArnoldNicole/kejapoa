@@ -8,7 +8,7 @@ import CreateAgent from './components/pages/create_agent'
 import Agents from './components/pages/agents'
 import ImageUploader  from './components/pages/ImageUpload'
 import HouseImageUploader from  './components/pages/HouseImageUpload'
-import Chat from './components/pages/chat'
+//import Chat from './components/pages/chat'
 
 const routes = [
     //projects routes....      
@@ -42,10 +42,10 @@ const routes = [
     path:'/house/upload/:id',
     component: HouseImageUploader,
   }, 
-  {
-    path:'/chat/:id',
-    component: Chat,
-  }
+  // {
+  //   path:'/chat/:id',
+  //   component: Chat,
+  // }
 ]
 
 

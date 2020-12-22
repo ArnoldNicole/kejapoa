@@ -47,6 +47,9 @@ Route::post('/user/editContactData','LandlordController@update')->middleware('au
 Route::get('/chat/{user}','ChatController@index')->middleware('auth');
 Route::get('/user/fetchmessages/{user}','ChatController@show')->middleware('auth');
 Route::post('/user/sendMessage','ChatController@store')->middleware('auth');
+Route::get('/recipient/{user}','ChatController@findRecipient')->middleware('auth');
+Route::middleware('auth')->post('user/{user}/online', 'UserOnlineController');
+Route::middleware('auth')->post('user/{user}/offline', 'UserOfflineController');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

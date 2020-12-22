@@ -20,6 +20,8 @@ class User extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'status'=>$this->status,
+            'api_token'=>$this->api_token,
             'email'=>$this->email,            
             'username'=>$this->username,            
             'profile_image'=>$this->profile_image,

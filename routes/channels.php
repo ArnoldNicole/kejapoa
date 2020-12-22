@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 // Broadcast::channel('messenger.{id}', function ($user, $id) {
 //     return $user->id===Message::find($id)->to_user; 
 // });
-Broadcast::channel('chatroom.{toUser}', function ($user, $toUser) {
+Broadcast::channel('chatroom', function ($user) {
     //return true; //$user->id === $toUser;
     if (Auth::check()) {
     	return [
