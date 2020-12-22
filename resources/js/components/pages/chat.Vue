@@ -125,19 +125,26 @@
 	        margin-bottom: -4px;
 	        border: 1px solid white;
 	      }
+	      .auto{	      	
+	      	height: 70%;
+	      	overflow-y: scroll;
+	      }
+	      ::-webkit-scrollbar {
+	          display: none;
+	      }
 	                 
 </style>
 
 <template>
 	<div class="container">
-		<Row>
+		<Row :gutter="16">
 			<Col span="6">
 			<Card>
 				<p slot="title">Chats</p>
 			</Card>
 			</Col>
 
-			<Col span="18">
+			<Col span="17">
 				<Card>
 					<p slot="title">
 					 <div v-if="recipient">
@@ -150,7 +157,7 @@
 					 	Loading...
 					 </div>					
 					</p>
-					<div class="card-body height3">
+					<div class="height3 auto">
 							        			<ul class="chat-list" v-for="message in conversation">
 							        				<li class="in" v-if="message.from_user==data.user_id">
 							        					<div class="chat-body">
@@ -169,17 +176,21 @@
 
 							        			</ul>
 							        		</div>
-				<Form>
-					<FormItem prop="message">
+				<Form @submit.native.prevent inline >
+					<FormItem prop="message" class="w-75">
 					    <Input type="text" v-model='data.message'  placeholder="Enter your message">
-					        <Icon type="md-mail" slot="prepend"></Icon>				    </Input>
-					   
-					   
+					        <Icon type="md-mail" slot="prepend"></Icon>
+					       
+					    </Input>
+					</FormItem>
+					<FormItem>
+						<Button @click="sendMessage" :disabled="isActive" type="default"> <Icon type="ios-send" color="aqua" size="30"></Icon></Button>
 					</FormItem>
 
-					<FormItem>
-						<Button @click="sendMessage">Send</Button>
-					</FormItem>
+
+					
+						
+					
 					
 				</Form>
 				</Card>
@@ -197,19 +208,24 @@
 			},
 			contacts:[],
 			conversation:[],
+			isActive: false,
 			}
 		},    
 		methods:{
 			async sendMessage(){
+				this.isActive=true
 				if (this.data.message.trim()=='') {
 					return this.e('Please type your message')
+					this.isActive=false
 				}
 				
 				const res =  await this.callApi('post', '/user/sendMessage', this.data)
 				if (res.status==200) {					
 					this.s('Message sent')
 					this.conversation.push(res.data);
-					this.data.message=''			
+					this.data.message=''
+					this.isActive=false					
+
 				}else{
 					if(res.status==422){
 						if (res.data.errors.message) {
