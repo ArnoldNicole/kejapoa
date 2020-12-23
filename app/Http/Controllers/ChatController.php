@@ -8,7 +8,7 @@ use App\Models\Message;
 use Auth;
 use App\Events\NewMessage;
 use App\Http\Resources\User as UserResource;
-
+use App\Notifications\NewContact;
 
 
 class ChatController extends Controller
@@ -80,6 +80,18 @@ class ChatController extends Controller
      */
     public function show(User $user)
     {
+        //check if the user foloows the authenticated user, if false force follow
+       $following = auth()->user()->contact->followers->contains($user);
+      // dd( $following);
+      if ($following==false) {
+          $user->following()->toggle(auth()->user()->contact);
+          $user->notify(new NewContact(auth()->user()));
+              }      
+      if ($user->id==auth()->user()->id) {
+               abort(401,'You cant chat alone');
+            }
+       
+
     	if ($user) {    		
     		$messages = Message::where(function($query) use ($user) {
     		            $query->where('from_user', Auth::user()->id)->where('to_user', $user->id);
@@ -88,9 +100,7 @@ class ChatController extends Controller
     		        })->orderBy('created_at', 'ASC')->limit(15)->get();
 
     		      //  dd($messages);
-    		if ($user->id==auth()->user()->id) {
-    		   abort(401,'You cant chat alone');
-    		}
+    		
 
     		
 

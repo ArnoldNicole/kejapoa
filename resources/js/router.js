@@ -9,6 +9,8 @@ import Agents from './components/pages/agents'
 import ImageUploader  from './components/pages/ImageUpload'
 import HouseImageUploader from  './components/pages/HouseImageUpload'
 //import Chat from './components/pages/chat'
+import chatPage from './components/pages/chatapp'
+import NoticeBoard from './components/pages/NoticeBoard'
 
 const routes = [
     //projects routes....      
@@ -41,11 +43,16 @@ const routes = [
   {
     path:'/house/upload/:id',
     component: HouseImageUploader,
-  }, 
-  // {
-  //   path:'/chat/:id',
-  //   component: Chat,
-  // }
+  },
+  {
+    path:'/chats',
+    component:chatPage,
+  },
+  {
+    path:'/notifications/',
+    component:NoticeBoard,
+  } 
+
 ]
 
 

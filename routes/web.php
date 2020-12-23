@@ -50,6 +50,10 @@ Route::post('/user/sendMessage','ChatController@store')->middleware('auth');
 Route::get('/recipient/{user}','ChatController@findRecipient')->middleware('auth');
 Route::middleware('auth')->post('user/{user}/online', 'UserOnlineController');
 Route::middleware('auth')->post('user/{user}/offline', 'UserOfflineController');
+Route::get('/user/fetchContactData','ContactsController@show')->middleware('auth');
+Route::get('user/api/notifications/unread','ContactsController@notice')->middleware('auth');
+Route::post('/user/api/notifications/markAsRead','ContactsController@updateNotice')->middleware('auth');
+Route::get('/user/api/notifications/fetchallNotifications','ContactsController@loadAllNotifications')->middleware('auth');
 
 
 Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');

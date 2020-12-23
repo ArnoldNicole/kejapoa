@@ -29,8 +29,10 @@ class User extends JsonResource
             'krapin'=>$this->krapin,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'is_landlord' => $this->is_landlord,
+            'is_landlord' => $this->is_landlord,            
+            'notesCount'=>$this->notifications->count(),
             'contact' => $this->contact,
+            //'notesCount'=>$this->unreadNotifications->count()
         ];
     }
 }

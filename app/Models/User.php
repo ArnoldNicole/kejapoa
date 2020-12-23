@@ -33,6 +33,10 @@ class User extends Authenticatable
              static::created(function ($user) {
                  $user->contact()->create([
                      'town' => 'Nairobi',
+                     'phone_number'=>'07xx xxxxxx',
+                     'postal_box'=>'000',
+                     'postal_code'=>'00000',
+
                  ]);
 
                  //Mail::to($user->email)->send(new NewUserWelcomeMail());
@@ -74,5 +78,9 @@ class User extends Authenticatable
     }
     public function contact(){
         return $this->hasOne('App\Models\Contact');
+    }
+      public function following()
+    {
+        return $this->belongsToMany('App\Models\Contact');
     }
 }

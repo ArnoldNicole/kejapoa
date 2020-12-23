@@ -21,11 +21,11 @@
         <Submenu name="3">
             <template slot="title">
                 <Icon type="ios-stats" />
-                Chats
+                Chat and Notices
             </template>
             <MenuGroup title="Messages">
-                <MenuItem name="3-1">Inbox</MenuItem>
-                <MenuItem name="3-2">Trash</MenuItem>                
+                <MenuItem name="3-1" to="/chats">Contacts</MenuItem>
+                <MenuItem name="3-2" to="/notifications">Notice Board</MenuItem>                
             </MenuGroup>            
         </Submenu>
 
@@ -37,8 +37,8 @@
 
     </Menu>  
 
-    <Row>
-        <Col span="24" justify="center" >
+    <Row :gutter="16">
+        <Col span="18" justify="center" >
             <Card>
                 <div slot="title">
                     <RadioGroup v-model="theme1">
@@ -49,6 +49,21 @@
                 </div>
                 <router-view></router-view>                
             </Card>
+        </Col>
+        <Col span="6">
+
+            <Card class="mt-2">
+                <Alert type="info" show-icon closable>                       
+                        <span slot="close">&times;</span>
+                        <template slot="desc">
+                           
+                            <router-link to="/notifications/">
+                                <span class="badge badge-info">{{user.notesCount}} </span> Unread Notifications
+                            </router-link>
+                          
+                         </template>
+                    </Alert>
+                </Card>
         </Col>        
     </Row> 
 
@@ -59,13 +74,13 @@
         data () {
             return {
                 theme1: 'light',
-                user:[],
+                user:[],                
             }
         },
         async created(){
-            const res= await this.callApi('get', '/user')
-            if (res.status === 200) {                
-                this.user = res.data
+            const res= await this.callApi('get', '/user/profileData')
+            if (res.status == 200) {                
+                this.user = res.data.data
             }
             else{
                 this.e('Unexpected error keeps on occuring')

@@ -12,7 +12,7 @@
 						</FormItem>
 
 						<FormItem prop="username" label="Choose a username">
-						    <Input type="text" v-model="newUser.username" placeholder="Full Legal Names">
+						    <Input type="text" v-model="newUser.username" placeholder="Choose a username">
 						        <Icon type="ios-person-outline" slot="prepend"></Icon>
 						    </Input>
 						</FormItem>
@@ -25,19 +25,19 @@
 
 						<FormItem prop="krapin" label="KRA PIN">
 						    <Input type="text" v-model="newUser.krapin" placeholder="Enter KRA PIN">
-						        <Icon type="ios-person-outline" slot="prepend"></Icon>
+						        <Icon type="md-card" slot="prepend"></Icon>
 						    </Input>
 						</FormItem>
 
 						<FormItem prop="password" label="Enter Password">
 						    <Input type="password" v-model="newUser.password" placeholder="Enter a password">
-						        <Icon type="ios-person-outline" slot="prepend"></Icon>
+						        <Icon type="ios-key" slot="prepend"></Icon>
 						    </Input>
 						</FormItem>
 
 						<FormItem prop="password-confirm" label="Confirm Password">
 						    <Input type="password" v-model="newUser.password_confirmation" placeholder="Confirm Password">
-						        <Icon type="ios-person-outline" slot="prepend"></Icon>
+						        <Icon type="ios-key" slot="prepend"></Icon>
 						    </Input>
 						</FormItem>
 

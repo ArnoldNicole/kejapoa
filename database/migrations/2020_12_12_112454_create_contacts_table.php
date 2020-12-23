@@ -17,9 +17,9 @@ class CreateContactsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('user_id');
-            $table->string('phone_number')->nullable();
-            $table->string('postal_box')->nullable();
-            $table->string('postal_code')->nullable();
+            $table->string('phone_number')->default('07XXXXXXXX');
+            $table->string('postal_box')->default('57');
+            $table->string('postal_code')->default('00517');
             $table->string('town')->nullable();
              });
     }

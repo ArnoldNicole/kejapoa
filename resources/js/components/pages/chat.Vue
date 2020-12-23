@@ -140,7 +140,7 @@
 		<Row :gutter="16">
 			<Col span="6">
 			<Card>
-				<p slot="title">Chats</p>
+				<contacts></contacts>
 			</Card>
 			</Col>
 
@@ -199,6 +199,7 @@
 	</div>
 </template>
 <script>
+import contacts from'./contacts.vue'
 	export default {			  
 		data(){
 			return{			
@@ -210,7 +211,8 @@
 			conversation:[],
 			isActive: false,
 			}
-		},    
+		},  
+		components:{contacts},  
 		methods:{
 			async sendMessage(){
 				this.isActive=true
