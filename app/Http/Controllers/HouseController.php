@@ -41,9 +41,9 @@ class HouseController extends Controller
             'file' => 'required|mimes:jpeg,jpg,png',
         ]);
         $picName = time() . '.' . $request->file->extension();
-        $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
-        //$request->file->move(public_path('uploads'), $picName);
-        return $uploadedFileUrl;
+        //$uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+        $request->file->move(public_path('uploads'), $picName);
+        return $picName;//$uploadedFileUrl;
     }
 
     public function store(Request $request){

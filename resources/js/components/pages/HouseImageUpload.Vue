@@ -22,7 +22,7 @@
             </div>
           </Upload>
           <div class="demo-upload-list" v-if="data.iconImage">
-             <img class="img-thumbnail w-50" :src="`${data.iconImage}`" />
+             <img class="img-thumbnail w-50" :src="'/uploads/'+data.iconImage" />
             <div class="demo-upload-list-cover">
               <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
             </div>
@@ -37,23 +37,17 @@
     </Col>
     </Row>
     <div class="space"></div>
-    <Row>
-      <Col span="24">
-      <stack :column-min-width="320" :gutter-width="2" :gutter-height="2">
-            <stack-item v-for="(houseImage, i) in houseImages" :key="i" v-if="houseImages.length" monitor-images-loaded>
-              <img :src="houseImage.image" class="img-thumbnail w-100" />
-            </stack-item>
-          </stack>
-    </Col>
-    </Row>
+    <div class="row container-fluid mt-4" v-if="houseImages.length">
+      <div class="col-md-4" v-for="(houseImage, i) in houseImages">
+        <img :src="'/uploads/'+houseImage.image" class="img-fluid">
+      </div>
+    </div> 
+
   </div>
 </template>
 
 <script>
-import { Stack, StackItem } from 'vue-stack-grid';
-export default {
-   components: { Stack, StackItem } ,
-   props:['monitor-images-loaded'], 
+export default {  
   data() {
     return {
       data: {

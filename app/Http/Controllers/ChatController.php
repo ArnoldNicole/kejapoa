@@ -9,6 +9,7 @@ use Auth;
 use App\Events\NewMessage;
 use App\Http\Resources\User as UserResource;
 use App\Notifications\NewContact;
+use App\Models\House;
 
 
 class ChatController extends Controller
@@ -158,5 +159,25 @@ class ChatController extends Controller
 
     public function findRecipient(User $user){
          return new UserResource($user);
+    }
+
+
+    public function initChat(House $house){
+       if ($house->user->id!=auth()->user()->id) {
+           //send the landlord a message
+               $message =  auth()->user()->messages()->create([
+                  'from_user'=>auth()->user()->id,
+                  'to_user'=>$house->user->id,
+                  'content'=>'Hello '.$house->user->name.' Am interested in your '.$house->house_name. '. Talk to me about it.'
+               ]);
+               //dd($message->id);
+              //broadcast(new NewMessage($message))->toOthers();
+              //redirect to homepage
+
+              return redirect('/chat/'.$house->user->id);
+       }
+       else{
+        return redirect('/profile');
+       }
     }
 }

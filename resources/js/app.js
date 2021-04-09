@@ -4,6 +4,7 @@ require('./bootstrap');
 window.Vue = require('vue')
 import Vue2Editor from "vue2-editor";
 import router from './router'
+import store from './store'
 import common from './common'
 import ViewUi from 'view-design'
 import 'view-design/dist/styles/iview.css';
@@ -22,13 +23,17 @@ window.Echo = new Echo({
     forceTLS:true, //process.env.PUSHER_TLS_MODE,
 });
 Vue.component('main-app', require('./components/main-app.vue').default)
+Vue.component('details-data', require('./components/Details').default)
 Vue.component('registration-form', require('./components/pages/registerLandlord').default)
 Vue.component('house-search', require('./components/pages/houseSearch').default)
 Vue.component('chat-area', require('./components/pages/chat.vue').default);
+Vue.component('get-help', require('./components/GetHelp.vue').default);
+
 // Vue.component('quill-component', require('./components/pages/QuillComponent.vue').default);
 const app = new Vue({
     el: '#app', 
     router,
+    store
     
    
 })

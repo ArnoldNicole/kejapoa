@@ -18,7 +18,16 @@ class House extends Model
         return 'houses_index';
     }
     
-    protected $guarded =[];
+    protected $fillable =[
+        'house_name',
+        'geo_location',
+        'status',
+        'rooms',
+        'condition',
+        'description',
+        'rent_amount',
+        'iconImage',
+    ];
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',        

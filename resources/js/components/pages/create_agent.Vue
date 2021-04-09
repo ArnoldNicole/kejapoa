@@ -4,23 +4,22 @@
           	<Col span="18">
 
           	<Card>
-          	    <p slot="title">Add an agent to your profile</p>          	    
-
+          	    <p slot="title">Add an agent to your profile</p>
           	    <Form>
           	        <FormItem prop="username" label="Username">
-          	            <Input type="text" v-model="newAgentData.username" placeholder="Username">
+          	            <Input type="text" v-model="newAgentData.username" placeholder="Username" required>
           	                <Icon type="ios-person-outline" slot="prepend"></Icon>
           	            </Input>
           	        </FormItem>
 
           	        <FormItem prop="email" label="Email">
-          	            <Input type="email" v-model="newAgentData.email" placeholder="Registered email">
+          	            <Input type="email" v-model="newAgentData.email" placeholder="Registered email" required>
           	                <Icon type="md-mail" slot="prepend"></Icon>
           	            </Input>
           	        </FormItem>
 
           	         <FormItem prop="salary" label="Salary">
-          	            <Input type="number" v-model="newAgentData.salary" placeholder="Offered Salary">
+          	            <Input type="number" v-model="newAgentData.salary" placeholder="Offered Salary" min="100" required>
           	                <Icon type="md-mail" slot="prepend"></Icon>
           	            </Input>
           	        </FormItem>
@@ -33,9 +32,7 @@
           	        </FormItem>
 
           	        <FormItem prop="dateOfBirth" label="Date of Birth">
-          	             <Input type="date" v-model="newAgentData.dateOfBirth"> 
-          	            <!-- <DatePicker v-model="newAgentData.dateOfBirth" type="date" placeholder="Select date of birth" confirm style="width: 200px"> -->
-          	            	
+          	             <Input type="date" v-model="newAgentData.dateOfBirth">          	            	
           	            </DatePicker>
           	                <Icon type="md-calendar" slot="prepend"></Icon>
           	            </Input>

@@ -1,6 +1,6 @@
 <template>
 	<div class="container-fluid">
-		<div class="row justify-content-center">
+		<div class="row justify-content-center" v-if="ready">
 			<div class="col-md-4">
 				<div class="bg-dark float-left p-2">
 					<h5 class="text-white">{{house.house_name}}</h5>
@@ -95,16 +95,14 @@
 			<div slot="footer">
 				Use the save button on top of this Window
 			</div>
-
 		</Modal>		
-				<div class="row justify-content-center">
-					<div class="col-md-12 w-100">
+				<div class="row justify-content-center" v-if="houses!=[]">
+					<div class="col-md-8 w-100">
 						<h2 class="text-center font-weight-bold text-capitalize text-dark">YOUR HOUSES</h2>
 						<br>
 						<Carousel autoplay loop>
 						        <CarouselItem v-for="(apartment, i) in houses" :key="i" v-if="houses.length">
 						            <div class="demo-carousel">
-
 						            	<div class="card">
 						            		<div class="card-header">
 						            			<h5 class="text-center font-weight-bold">{{apartment.house_name}}
@@ -124,7 +122,7 @@
 						            					</p>
 						            				</div>
 
-						            				<div class="col-md-8">
+						            				<div class="col-md-6">
 						            					<span v-html="apartment.description">
 						            					</span>
 						            				</div>	
@@ -142,23 +140,19 @@
 					</div>
 				</div>
 				<hr>
-				<Row justify="center">
-					<Col span="20">
-						<jsz-vue-gallery v-bind:jsz-gallery="housePhotos">
-											
-						</jsz-vue-gallery>
-					</Col>
-				</Row>
-			
+				<div class="row container-fluid" v-if="housePhotos!=[]">
+					<div class="col-md-4" v-for="image in housePhotos">
+						<img :src="'/uploads/'+image.imageSrc"  class="img-fluid w-100">
+					</div>
+				</div>
 	</div>
 </template>
 <script>
 // import editModal from './editModal';
-import JszVueGallery from 'jsz-vue-gallery'
 	export default {
-		components: {JszVueGallery},
-		data (){
+				data (){
 			return {
+				ready:false,
 				house:{
 					house_name:'',
 					geo_location:'',
@@ -262,7 +256,9 @@ import JszVueGallery from 'jsz-vue-gallery'
 		async created(){
 		const res = await this.callApi('get', '/landlord/gethouse_data/' + this.$route.params.id)
 		if (res.status === 200) {			
-			this.house = res.data					}
+			this.house = res.data	
+			this.ready = true
+			}
 		else{
 			this.e('Something went wrong while loading house data')
 		}

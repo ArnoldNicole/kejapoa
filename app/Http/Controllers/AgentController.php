@@ -36,7 +36,7 @@ class AgentController extends Controller
                 'dateOfBirth'=>['required','date','before:today', 'before:-18 years'],
                 'salary'=>['required','numeric','min:1000', 'max:100000'],
         ]);
-        if ($data->email == auth()->user()->email || $data->username == auth()->user()->username) {
+        if ($data['email'] == auth()->user()->email || $data['username'] == auth()->user()->username) {
             return "You cant exist as both a landlord and an agent";
         }
         auth()->user()->agents()->create($data);

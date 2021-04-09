@@ -8,11 +8,13 @@ use App\Models\User;
 use App\Models\House;
 use App\Models\Image;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
+use App\Models\HelpMessage;
 
 class GuestController extends Controller
 {
     public function index(){
-        $featuredHouses = [];
+        $featuredHouses = House::orderBy('created_at','DESC')->with('images')->get();
         return view('welcome', compact('featuredHouses'));
     }
     public function contact_page(Request $request){
@@ -72,6 +74,49 @@ class GuestController extends Controller
 
     public function explore(Image $image){
          return view('guest.show', compact('image'));
+    }
+
+    public function assitant(Request $request){
+        //get the vallue of the chat_session cookie
+        $value = $request->cookie('chat_session');        
+        if ($value!='') { 
+        //if cookie is available
+           $data = $this->validate($request,[
+                'message'=>'required|string|min:10',
+            ]);
+           //get the name and email from the cookie
+           $details = json_decode($value);           
+           //return $details;
+           $message = HelpMessage::create([
+            'name'=>$details->name,
+            'email'=>$details->email,
+            'message'=>$data['message'],
+           ]);
+
+           return $message;
+
+        }else{
+            //if cookie is missing, just create a new one
+            $data = $this->validate($request,[
+                'name'=>'required|string|min:3',
+                'email'=>'required|string|min:5',
+                'message'=>'required|string|min:10',
+            ]);
+            //store the message
+            $message = HelpMessage::create([
+             'name'=>$data['name'],
+             'email'=>$data['email'],
+             'message'=>$data['message'],
+            ]);
+            //create a cookie
+            $response = new Response('Message Sent');
+            $json = json_encode([
+                'name'=>$data['name'],
+                'email'=>$data['email'],
+            ]);
+            $response->withCookie(cookie('chat_session', $json, 20));
+            return $response;          
+        }       
     }
 
 }

@@ -7,14 +7,19 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+     <script src="{{asset('js/manifest.js')}}"></script>
+    <script src="{{asset('js/vendor.js')}}"></script>
+    <script src="{{asset('js/app.js')}}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/mycss.css">
     {{-- <link href="{{asset('css/new-age.min.css')}}" rel="stylesheet"> --}}
     <style type="text/css">
       main {
@@ -28,11 +33,13 @@
     </style>
     @yield('styles')
      <script>
+           
             (function () {
                 window.Laravel = {
                     csrfToken: '{{ csrf_token() }}'
                 };
             })();
+          
         </script>
 </head>
 <body>
@@ -99,5 +106,16 @@
         </main>
         
     </div>
+    <!-- ClickDesk Live Chat Service for websites -->
+    <script type='text/javascript'>
+    var _glc =_glc || []; _glc.push('all_ag9zfmNsaWNrZGVza2NoYXRyEgsSBXVzZXJzGICAiL_j9L0LDA');
+    var glcpath = (('https:' == document.location.protocol) ? 'https://my.clickdesk.com/clickdesk-ui/browser/' : 
+    'http://my.clickdesk.com/clickdesk-ui/browser/');
+    var glcp = (('https:' == document.location.protocol) ? 'https://' : 'http://');
+    var glcspt = document.createElement('script'); glcspt.type = 'text/javascript'; 
+    glcspt.async = true; glcspt.src = glcpath + 'livechat-cloud-new.js';
+    var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(glcspt, s);
+    </script>
+    <!-- End of ClickDesk -->
 </body>
 </html>

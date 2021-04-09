@@ -20,7 +20,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user=auth()->user();
+        $user = new UserResource(auth()->user());
         return view('profile.userProfile', compact('user'));
     }
 
@@ -76,18 +76,13 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        //dd($request->file);
-        $data = $this->validate($request, [
-            'file'=>['required','image']
-        ]);
-        //dd($data);
-        $imageName = time().'.'.$request->file->extension();
-        // $request->file->move(public_path('profiles'), $imageName);
-        $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
-        auth()->user()->profile_image = $uploadedFileUrl; //'/profiles/'.$imageName;
-        auth()->user()->save();       
-        return $uploadedFileUrl;
-      
+       $file = $this->validate($request,['file'=>'required']);
+       $picName = time() . '.' . $request->file->extension(); 
+       dd($picName);      
+       $request->file->move(public_path('profile_photos'), $picName);        
+        auth()->user()->profile_image = '/profile_photos/'.$picName;
+        auth()->user()->save();
+        return '/profile_photos/'.$picName;    
     }
 
     /**

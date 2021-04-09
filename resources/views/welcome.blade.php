@@ -26,7 +26,9 @@
   <!-- Custom styles for this template -->
   <link href="{{asset('css/new-age.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/mycss.css">
-
+   <script src="{{asset('js/manifest.js')}}"></script>
+  <script src="{{asset('js/vendor.js')}}"></script>
+  <script src="{{asset('js/app.js')}}" defer></script>
 </head>
 
 <body id="page-top">
@@ -56,33 +58,17 @@
             {{-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="/profile">My Profile</a>
             </li> --}}
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            <li class="nav-item">
+                <a  class="nav-link dropdown-toggle" href="/profile">
                     {{ Auth::user()->name }}
                 </a>
-
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/profile">
-                        {{ __('Profile') }}
-                    </a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-                    
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
             </li>
             @endguest
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#download">Discover</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#features">Search</a>
+            <a class="nav-link js-scroll-trigger" href="#features">Houses</a>
           </li>                     
         </ul>
       </div>
@@ -109,115 +95,117 @@
       </div>
     </div>
   </header>
-  <section class="features" id="features">
-    <div class="container">
-      <div class="section-heading text-center">
-        <h2>Find Unlimited rooms</h2>
-        <p class="text-muted">In Unlimited locations!</p>     
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-md-12">
-          <h4 class="h4 text-capitalize text-info">Search Houses</h4>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group row">
-                <label class="text-md-right col-form-label col-md-4">House Search</label>
-                <div class="col-md-8 input-group">
-                  <input type="text" id="FindHouse" class="form-control" placeholder="Type your search">
+ <div id="app">
+   <section class="features" id="features">
+     <div class="container">
+       <div class="section-heading text-center">
+         <h2>Find Unlimited rooms</h2>
+         <p class="text-muted">In Unlimited locations!</p>     
+       </div>
+       <div class="row justify-content-center">
+         <div class="col-md-12">
+           <h4 class="h4 text-capitalize text-info">Search Houses</h4>
+           <div class="row">
+             <div class="col-md-12">
+               <div class="form-group row">
+                 <label class="text-md-right col-form-label col-md-4">House Search</label>
+                 <div class="col-md-8 input-group">
+                   <input type="text" id="FindHouse" class="form-control" placeholder="Type your search">
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           <div class="row justify-content-center">
+             <div class="col-md-12" id="HouseResults">
+               
+             </div>
+           </div>
+
+           <div class="row justify-content-center" id="loader" style="display: none;">
+             <div class="col-3">
+             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+               <span class="sr-only">Loading...</span>
+             </div>
+             <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+               <span class="sr-only">Loading...</span>
+             </div>
+             </div>
+           </div>         
+
+         </div>
+       </div>
+       <div class="container-fluid" id="app">
+         <details-data :authenticated="@auth true @else false @endauth" :houses="{{$featuredHouses}}"/>
+        {{-- @foreach($featuredHouses as $featuredHouse)
+          <div class="col-lg-3 my-auto">
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                  <div class="screen">
+                    Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else!
+                    <img src="img/img_1.jpg" class="img-fluid" alt="">
+                  </div>
+                  <div class="button text-center">
+                    <details :house="$featuredHouse"></details>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        @endforeach --}}
+       </div>
+     </div>
+   </section>
+   <section class="download bg-primary text-center" id="download">
+     <div class="container">
+       <div class="row">
+         <div class="col-md-8 mx-auto">{{request()->cookie('chat_session')}}
+            {{-- <get-help :chat_data="<?php
+              $value = request()->cookie('chat_session');
+               if($value==''){
+                echo 'null';
+                 } else{
+                  echo request()->cookie('chat_session');
+                } ?>"></get-help> --}}
+           <h2 class="section-heading">Discover what all the buzz is about!</h2>
 
-          <div class="row justify-content-center">
-            <div class="col-md-12" id="HouseResults">
-              
-            </div>
+           <p>Download Our App</p>
 
-          </div>
-
-          <div class="row justify-content-center" id="loader" style="display: none;">
-            <div class="col-3">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-            </div>
-          </div>         
-
-        </div>
-      </div>
-      <div class="row">
-      	@foreach($featuredHouses as $featuredHouse)
-      		<div class="col-lg-4 my-auto">
-      		  <div class="device-container">
-      		    <div class="device-mockup iphone6_plus portrait white">
-      		      <div class="device">
-      		        <div class="screen">
-      		          <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-      		          <img src="img/img_1.jpg" class="img-fluid" alt="">
-      		        </div>
-      		        <div class="button">
-      		          <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-      		        </div>
-      		      </div>
-      		    </div>
-      		  </div>
-      		</div>
-      	@endforeach
-      </div>
-    </div>
-  </section>
-  <section class="download bg-primary text-center" id="download">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 mx-auto">
-          
-         <a href="#" class="float">
-         <i class="fa fa-envelope my-float"></i>
-         </a>
-         <div class="label-container">
-         <div class="label-text">Talk to Us</div>
-         <i class="fa fa-play label-arrow"></i>
+           <div class="badges">
+             <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
+             {{-- <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a> --}}
+           </div>
          </div>
-
-
-          <h2 class="section-heading">Discover what all the buzz is about!</h2>
-          <p>Our app is available on any mobile device! Download now to get started!</p>
-          <div class="badges">
-            <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
-            {{-- <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a> --}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="contact bg-primary" id="contact">
-    <div class="container">
-      <h2>We
-        <i class="fas fa-heart"></i>
-        new members
-      <ul class="list-inline list-social">
-        <li class="list-inline-item social-twitter">
-          <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-facebook">
-          <a href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-google-plus">
-          <a href="#">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+       </div>
+     </div>
+   </section>
+   <section class="contact bg-primary" id="contact">
+     <div class="container">
+       <h2>We
+         <i class="fas fa-heart"></i>
+         new members
+       </h2>
+       <ul class="list-inline list-social">
+         <li class="list-inline-item social-twitter">
+           <a href="#">
+             <i class="fab fa-twitter"></i>
+           </a>
+         </li>
+         <li class="list-inline-item social-facebook">
+           <a href="#">
+             <i class="fab fa-facebook-f"></i>
+           </a>
+         </li>
+         <li class="list-inline-item social-google-plus">
+           <a href="#">
+             <i class="fab fa-google-plus-g"></i>
+           </a>
+         </li>
+       </ul>
+     </div>
+   </section>
+ </div>     
 
   <footer>
     <div class="container">
@@ -237,6 +225,17 @@
   </footer>
   <!-- Bootstrap core JavaScript -->
   {{-- <script type="text/javascript" src="{{asset('/js/app.js')}}"></script> --}}
+  <!-- ClickDesk Live Chat Service for websites -->
+  <script type='text/javascript'>
+  var _glc =_glc || []; _glc.push('all_ag9zfmNsaWNrZGVza2NoYXRyEgsSBXVzZXJzGICAiL_j9L0LDA');
+  var glcpath = (('https:' == document.location.protocol) ? 'https://my.clickdesk.com/clickdesk-ui/browser/' : 
+  'http://my.clickdesk.com/clickdesk-ui/browser/');
+  var glcp = (('https:' == document.location.protocol) ? 'https://' : 'http://');
+  var glcspt = document.createElement('script'); glcspt.type = 'text/javascript'; 
+  glcspt.async = true; glcspt.src = glcpath + 'livechat-cloud-new.js';
+  var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(glcspt, s);
+  </script>
+  <!-- End of ClickDesk -->
   <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 

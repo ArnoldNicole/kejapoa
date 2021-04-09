@@ -5,7 +5,9 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
 		<div class="card">
-			<div class="card-header bg-light"><h4>{{$house->house_name}}</h4></div>
+			<div class="card-header bg-info">
+				<h4>{{$house->house_name}}</h4>
+			</div>
 			<div class="card-body">
 				<div class="container">
 				    <div class="row">
@@ -16,6 +18,7 @@
 				        <div class="col-9 pt-5">
 				            <div class="d-flex justify-content-between align-items-baseline">
 				                <div class="d-flex align-items-center pb-3">
+				                	<h3>LandLord</h3>
 				                    <div class="h4">{{ $house->user->name }}</div>
 
 				                    {{-- <follow-button user-id="{{ $user->id }}" follows="{{ $follows }}"></follow-button> --}}
@@ -23,18 +26,28 @@
 				            </div>
 
 				           <div class="btn-group pt-1">
-				           	<a href="/chat/{{$house->user->id}}" class="btn btn-success btn-sm">Contact Landlord</a>
+				           	@auth
+				           	<a href="/chat/contact_landlord/intent/{{$house->id}}" class="btn btn-success btn-sm">Contact Landlord</a>
+				           	@else
+				           	@if (Route::has('login'))
+				           	 <a href="/login"  class="btn btn-outline-dark btn-sm">Login</a>				           	 
+		
+				           	@endif
 
-				           	 <a href="" class="btn btn-outline-info btn-sm">Show Interest</a>
+				           	@if (Route::has('register'))
+				           	 <a href="/register" title="Register to Contact Landlord" class="btn btn-outline-info btn-sm">Register to Contact {{$house->user->name}}</a>
+				           	@endif
+				           	
+				           	@endauth
 				           </div>
 				                
 				            
 
-				            <div class="d-flex">
+				           {{--  <div class="d-flex">
 				                <div class="pr-5"><strong>50</strong> Comments</div>
 				                <div class="pr-5"><strong>60</strong> Upvotes</div>
 				                <div class="pr-5"><strong>78</strong> Interested</div>
-				            </div>
+				            </div> --}}
 				            <div class="pt-2 font-weight-bold">Located at {{ $house->geo_location }}</div>
 				            <div class="pt-2 font-weight-bold">Rooms : {{ $house->rooms }} </div>
 				            <div class="pt-2 font-weight-bold">Rent Amount : {{ $house->rent_amount }} /= monthly</div>

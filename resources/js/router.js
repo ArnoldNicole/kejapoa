@@ -4,8 +4,8 @@ Vue.use(Router)
 import Houses from './components/pages/houses'
 import Profile from './components/pages/profile'
 import House from './components/pages/house'
-import CreateAgent from './components/pages/create_agent'
-import Agents from './components/pages/agents'
+// import CreateAgent from './components/pages/create_agent'
+// import Agents from './components/pages/agents'
 import ImageUploader  from './components/pages/ImageUpload'
 import HouseImageUploader from  './components/pages/HouseImageUpload'
 //import Chat from './components/pages/chat'
@@ -28,14 +28,14 @@ const routes = [
     component: House
   },
 
-  {
-    path: '/agents/create',    
-    component: CreateAgent,
-  },
-  {
-    path: '/agents/manage',
-    component: Agents,
-  },
+  // {
+  //   path: '/agents/create',    
+  //   component: CreateAgent,
+  // },
+  // {
+  //   path: '/agents/manage',
+  //   component: Agents,
+  // },
   {
     path:'/user/editImage',
     component: ImageUploader,

@@ -45,7 +45,7 @@ class NewContact extends Notification
             'title'=>"New Contact Created",
             'id'=>$this->user->id,
             'name'=>$this->user->name,
-            'message'=>$this->user->name.' Created contact with you.'
+            'message'=>$this->user->name.' Contacted you.'
         ];
     }
     

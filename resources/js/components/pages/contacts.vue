@@ -13,11 +13,11 @@
 			<div v-for="contact in contacts">
 				<a :href="'/chat/'+contact.id">
 					<div class="row justify-content-center mb-1">
-						<div class="col-md-4">
-							<img v-bind:src="contact.profile_image" v-bind:alt=" contact.profile_image" class="w-50 rounded-circle">
+						<div class="col-sm-4 text-center">
+							<img v-bind:src="contact.profile_image" v-bind:alt=" contact.profile_image" class=" img-fluid rounded-circle">
 						</div>
-						<div class="col-md-8">
-							<h5 class="text-md-left">{{contact.name}}</h5>
+						<div class="col-sm-8">
+							<p class="text-md-left">{{contact.name}}</p>
 						</div>
 					</div>
 				</a>

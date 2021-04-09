@@ -54,6 +54,9 @@ Route::get('/user/fetchContactData','ContactsController@show')->middleware('auth
 Route::get('user/api/notifications/unread','ContactsController@notice')->middleware('auth');
 Route::post('/user/api/notifications/markAsRead','ContactsController@updateNotice')->middleware('auth');
 Route::get('/user/api/notifications/fetchallNotifications','ContactsController@loadAllNotifications')->middleware('auth');
+Route::get('/chat/contact_landlord/intent/{house}','ChatController@initchat')->middleware('auth');
 
 
-Route::any('{slug}', 'ProfileController@index');//->where('slug', '([A-z\d-\/_.]+)?');
+// Asssist routes
+Route::post('/user/get/help/home', 'GuestController@assitant');
+

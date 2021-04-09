@@ -23,7 +23,8 @@ class LandlordController extends Controller
 			'rooms'=>['required','string'],
 			'condition'=>['required','string'],
 			'description'=>['required','string','min:30'],
-			'rent_amount'=>['required','string']
+			'rent_amount'=>['required','string'],
+            'iconImage'=>['required','string'],
 		]);
 
     	$house =  auth()->user()->houses()->create([
@@ -33,7 +34,8 @@ class LandlordController extends Controller
     		'rooms'=>$request->rooms,
     		'condition'=>$request->condition,
     		'description'=>$request->description,
-    		'rent_amount'=>$request->rent_amount
+    		'rent_amount'=>$request->rent_amount,
+            'iconImage'=>$request->iconImage,
     	]);
     	return $house;
     }

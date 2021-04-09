@@ -9,7 +9,7 @@
 			<Col span="18">
 				<Card>
 					<p slot="title">Conversation
-					<Button type="primary"><Icon type="md-add"></Icon> Contact</Button></p>
+					</p>
 				</Card>
 				<router-view>
 

@@ -147,15 +147,7 @@
 			<Col span="17">
 				<Card>
 					<p slot="title">
-					 <div v-if="recipient">
-					 	<span> {{recipient.name}} is: 					 		
-					 		<span v-if="recipient.status=='offline'"><span class="offline"></span> Offline</span>
-					 		<span v-else><span class="online"></span> Online</span>
-					 	</span>
-					 </div>	
-					 <div v-else>
-					 	Loading...
-					 </div>					
+					 KEJAPOA CONVERSATION	with {{recipient.name}}				
 					</p>
 					<div class="height3 auto">
 							        			<ul class="chat-list" v-for="message in conversation">

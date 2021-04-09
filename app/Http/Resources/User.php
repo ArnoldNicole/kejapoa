@@ -30,7 +30,7 @@ class User extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'is_landlord' => $this->is_landlord,            
-            'notesCount'=>$this->notifications->count(),
+            'notesCount'=>$this->unreadNotifications->count(),
             'contact' => $this->contact,
             //'notesCount'=>$this->unreadNotifications->count()
         ];

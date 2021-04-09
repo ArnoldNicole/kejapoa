@@ -4,7 +4,7 @@
 		<Button @click="addHouseModal=true"><Icon type="md-add"/> Add House</Button>
 		
 		<div>
-			<div>
+			<div style="width: 98%">
 				<table class="table table-hover table-responsive-sm">
 					<thead>
 						<tr class="bg-info">
@@ -12,10 +12,7 @@
 							<th>House Name</th>
 							<th>Geo Location</th>
 							<th>Created at</th>
-							<th>Status</th>
-							<th>Condition</th>
-							<th>Rooms</th>
-							<th>Description</th>
+							<th>Status</th>							
 							<th>Action</th>
 							<th></th>
 						</tr>
@@ -27,10 +24,6 @@
 							<td>{{house.geo_location}}</td>
 							<td>{{house.created_at}}</td>
 							<td>{{house.status}}</td>
-							<td>{{house.condition}}</td>
-							<td>{{house.rooms}}</td>
-							<td><div v-html="house.description"></div></td>
-							<td>
 								<Button type="info" size="small" @click="showHouseEditModal(house, i)">Edit</Button>								
 							</td>
 							<td>
@@ -47,11 +40,7 @@
 			title="Add a House Dialogue Box"
 			:mask-closable='false'
 			:closable='false'
-			:fullscreen='true'>
-			<div slot="header">
-				<Button type="error" @click="addHouseModal=false">Close</Button>
-				<Button type="info" @click="addHouse">Save House</Button>
-			</div>
+			:width="95">
 			<div class="form-group row">
 				<label class="col-form-label font-weight-bold col-md-4 text-md-right">House Name (Unique)</label>
 
@@ -96,19 +85,46 @@
 					
 				</div>
 			</div>
-
+			
 			<div class="row form-group">
 				<label class="col-form-label font-weight-bold col-md-4 text-md-right">Description</label>
 				<div class="col-md-8">
-				<vue-editor v-model="data.description"/>
-				<!-- <div v-html="data.description">
-
-				</div> -->
-					
+				<vue-editor useCustomImageHandler @image-added="handleImageAdded" v-model="data.description"/>
 				</div>
 			</div>
+
+			<div class="row form-group">
+				<label class="col-form-label font-weight-bold col-md-4 text-md-right">Cover Image</label>
+				<div class="col-md-8">					
+					<Upload
+					      ref="uploads"
+					      type="drag"
+					      :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+					      :on-success="handleSuccess"
+					      :on-error="handleError"
+					      :format="['jpg','jpeg','png']"
+					      :max-size="1024"
+					      :on-format-error="handleFormatError"
+					      :on-exceeded-size="handleMaxSize"
+					      action="/app/upload">
+					    
+					      <div style="padding: 20px 0">
+					        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+					        <p>Click or drag files here to upload</p>
+					      </div>
+					    </Upload>
+					    <div class="demo-upload-list" v-if="data.iconImage">
+					       <img class="img-thumbnail w-50" :src="'/uploads/'+data.iconImage" />
+					      <div class="demo-upload-list-cover">
+					        <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+					      </div>
+					    </div>
+				</div>
+			</div>
+
 			<div slot="footer">
-				Use the save button on top of this Window
+				<Button type="error" @click="addHouseModal=false">Close</Button>
+				<Button type="info" :loading="isAdding" :disabled="isAdding" @click="addHouse">{{isAdding ? 'Saving...' : 'Save House'}}</Button>
 			</div>
 		</Modal>
 
@@ -118,19 +134,12 @@
 			:mask-closable='false'
 			:closable='false'
 			:fullscreen='true'>
-
-			<div slot="header">
-				<Button type="error" @click="editHouseModal=false">Close</Button>
-				<Button type="info" @click='editHouse'>Save Changes</Button>
-				<p>Fill the form below to create a new house in the system </p>
-			</div>
-
 			<div class="form-group row">
 				<label class="col-md-4 text-md-right col-form-label font-weight-bold">House Name</label>
 				<div class="col-md-8">
 					<input v-model="editData.house_name" placeholder="Edit your House name" class="form-control" />					
 				</div>
-			</div>
+			</div>			
 			<div class="form-group row">
 				<label class="col-md-4 text-md-right col-form-label font-weight-bold">House Location</label>
 				<div class="col-md-8">
@@ -152,13 +161,14 @@
 			<div class="form-group row">
 				<label class="col-md-2 text-md-right col-form-label font-weight-bold">Description</label>
 				<div class="col-md-10">
-					<vue-editor v-model="editData.description"/>
+					<vue-editor class="work_area" useCustomImageHandler @image-added="handleImageAdded" v-model="editData.description"/>
 					<!-- <div v-html="editData.description">
 					</div> -->					
 				</div>
 			</div>
 			<div slot="footer">
-				Use the save button on top of this Window
+			<Button type="error" @click="editHouseModal=false">Close</Button>
+			<Button type="info" @click='editHouse'>Save Changes</Button>
 			</div>
 
 		</Modal>
@@ -177,9 +187,12 @@ export default {
 				condition:'',
 				rooms:'',
 				description:'',
-				rent_amount:''
+				rent_amount:'',
+				iconImage:'',
 
 			},
+			token:'',
+			isAdding:false,
 			loading:false,
 			addHouseModal:false,
 			houses:[],
@@ -197,27 +210,42 @@ export default {
 		}
 	},
 	methods: {
+		handleImageAdded(){
+			return this.e('Please dont upload images using this form, a separate page for images exists.')
+		},
 		async addHouse(){
+			this.isAdding =true
 			if (this.data.house_name.trim()=='') {
+				this.isAdding =false
 				return this.e('House Name is Required')
 			}
 			if (this.data.geo_location.trim()=='') {
+				this.isAdding =false
 				return this.e('House geolocation is Required')
 			}
 			if (this.data.status.trim()=='') {
+				this.isAdding =false
 				return this.e('House status is Required')
 			}
 			if (this.data.condition.trim()=='') {
+				this.isAdding =false
 				return this.e('Please provide the condition of the house')
 			}
 			if (this.data.rooms.trim()=='') {
+				this.isAdding =false
 				return this.e('We`d love to know the number of rooms available')
 			}
 			if (this.data.description.trim()=='') {
+				this.isAdding =false
 				return this.e('Please provide a description for the house')
 			}
 			if (this.data.rent_amount.trim()=='') {
+				this.isAdding =false
 				return this.e('Tenants need to know the rent amount')
+			}
+			if (this.data.iconImage.trim()=='') {
+				this.isAdding =false
+				return this.e('Please upload an image')
 			}
 			const res= await this.callApi('post', '/landlord/addHouse', this.data)
 			if (res.status==201) {
@@ -231,28 +259,11 @@ export default {
 				this.data.condition=''
 				this.data.description=''
 				this.data.rent_amount=''
+				this.data.iconImage = ''
 			}else{
 				if (res.status==422) {
-					if (res.data.errors.house_name) {
-						this.e(res.data.errors.house_name[0])
-					}
-					if (res.data.errors.geo_location) {
-						this.e(res.data.errors.geo_location[0])
-					}
-					if (res.data.errors.status) {
-						this.e(res.data.errors.status[0])
-					}
-					if (res.data.errors.condition) {
-						this.e(res.data.errors.condition[0])
-					}
-					if (res.data.errors.rooms) {
-						this.e(res.data.errors.rooms[0])
-					}
-					if (res.data.errors.description) {
-						this.e(res.data.errors.description[0])
-					}
-					if (res.data.errors.rent_amount) {
-						this.e(res.data.errors.rent_amount[0])
+					for (let i in res.data.errors) {
+						this.e(res.data.errors[i][0])
 					}
 				}
 				else{
@@ -369,10 +380,46 @@ export default {
 			this.editData = object
 			this.editHouseModal = true
 			this.index= index
-		}
+		},
+		handleSuccess(res, file) {
+		     res = `${res}`;
+		     this.data.iconImage = res;
+		   },
+
+		   handleError(res, file) {
+		     this.$Notice.warning({
+		       title: "The file format is incorrect",
+		       desc: `${
+		         file.errors.file.length
+		           ? file.errors.file[0]
+		           : "Something went wrong!"
+		       }`
+		     });
+		   },
+		   handleFormatError(file) {
+		     this.$Notice.warning({
+		       title: "The file format is incorrect",
+		       desc:
+		         "File format of " +
+		         file.name +
+		         " is incorrect, please select jpg or png."
+		     });
+		   },
+
+		   handleMaxSize(file) {
+		     this.$Notice.warning({
+		       title: "Exceeding file size limit",
+		       desc: "File  " + file.name + " is too large, no more than 2M."
+		     });
+		   },
+		   deleteImage(isAdd = true) {              
+		       this.data.iconImage = "";
+		       this.$refs.uploads.clearFiles();
+		    }
 
 	},
 	async created(){
+		this.token = window.Laravel.csrfToken;
 		const res= await this.callApi('get', '/landlord/myhouses')
 		if (res.status === 200) {
 			this.s('Houses loaded Successfully')
@@ -385,3 +432,12 @@ export default {
 	
 }
 </script>
+
+
+<style scoped>
+	.work_area{
+		max-height:350px;
+		overflow-y: scroll;
+		margin-bottom: 3rem;
+	}
+</style>
